@@ -1,0 +1,97 @@
+using System;
+
+
+namespace MO_5
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.Write(" Function = 3x^4-4x^3+x^2-2x-3 na promigky [a;b] with pohubkou: \n" + " a = ");
+            double start = double.Parse(Console.ReadLine());
+            Console.Write(" b = ");
+            double end = double.Parse(Console.ReadLine());
+            Console.Write(" Pohubka = ");
+            double pohubka = double.Parse(Console.ReadLine());
+            Console.Write(" Select method:\n 1 - Newton\n 2 - Bisection\n Method numer =  ");
+            int select = int.Parse(Console.ReadLine());
+            Console.Write(" --------------\n");
+            if (select == 1)
+            {
+                Newton(start, end, pohubka);
+            }
+            if (select == 2)
+            {
+                Bisection(start, end, pohubka);
+            }
+        }
+
+        static double function_1(double x)
+        {
+            double y_1 = 3 * Math.Pow(x, 4) - 4 * Math.Pow(x, 3) + x * x - 2 * x - 3;
+            return y_1;
+        }
+
+        static double function_2(double x)
+        {
+            double y_2 = 12 * Math.Pow(x, 3) - 12 * Math.Pow(x, 2) + 2 * x  - 2;
+            return y_2;
+        }
+        static void Bisection(double start, double end, double pohubka)
+        {
+            Console.Write(" Koreni: \n");
+            double y, p, p1, p2, c;
+            p1 = start; p2 = end; p = (p1+p2)/2;
+            if (function_1(p1) * function_1(p2) > 0 || start >= end) Console.Write(" Na zadanom intervali koreniv nema ");
+            y=function_1(p);
+            do
+            {
+                if (function_1(p1)*function_1(p)<0)
+                { 
+                    p2=p;
+                    p=(p1+p2)/2;
+                }
+                else
+                {
+                    p1=p;
+                    p=(p1+p2)/2;
+                }
+                y=function_1(p);
+            } while (Math.Abs(function_1(p)) > pohubka);
+            c = Math.Abs((p1-p2)/2);
+            Console.Write(" x = " + p + "\n");
+        }
+
+        static void Newton( double start, double end, double pohubka)
+        {
+            float i = 0;
+            double x, q, x1, x2, y_1, y_2;
+            if (start>end)
+            {
+                x = start;
+                start=end;
+                end=x;
+            }
+            Console.Write(" Koreni: \n");
+            for (x=start; x<end; x+=pohubka*100)
+            {
+                y_1=function_1(x);
+                y_2=function_1(x+pohubka*100);
+                if (((y_1>0)&&(y_2<0))||((y_1<0)&&(y_2>0)))
+                {
+                    i++;
+                    do
+                    {
+                        x1=x;
+                        x2=x1-function_1(x1)/function_2(x1);
+                        x1=x2;
+                        q=Math.Abs(x1-x2);
+                    } while (q>pohubka);
+                    Console.Write(" x_" + i + " = " + x1 + "\n");
+                }
+            }
+        }
+
+    }
+}
+
