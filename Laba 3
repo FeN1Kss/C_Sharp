@@ -1,0 +1,72 @@
+using System;
+
+namespace MO_3
+{
+	class Program
+	{
+
+		static int Main()
+		{
+			Console.OutputEncoding = System.Text.Encoding.Default;
+			int n = 13;
+			double[] X = { 2.4, 2.6, 2.8, 3.0, 3.2, 3.4, 3.6, 3.8, 4.0, 4.2, 4.4, 4.6 };
+			double[] Y = { 3.526, 3.782, 3.945, 4.043, 4.104, 4.155, 4.222, 4.331, 4.507, 4.775, 5.159, 5.683 };
+			double[] Y1 = new double[n];
+			double[] Y2 = new double[n];
+			double[] Y3 = new double[n];
+			double[] Y4 = new double[n];
+			double q, G, L, h;
+			int k, i, j;
+
+
+			Console.WriteLine("Таблиця значень функції: \n");
+			Console.WriteLine("\tX" + "\t|" + "\tY" + "\n");
+			Console.WriteLine("  ---------------------------" + "\n");
+			for (i = 0; i < n - 1; i++)
+				Console.WriteLine("\t" + X[i] + "\t|" + "\t" + Y[i] + "\n");
+			Console.WriteLine("Введіть значення X: ");
+			double xx = Convert.ToDouble(Console.ReadLine());
+			if (xx==3.45)
+				i=6;
+			else
+				i=4;
+			k=0;
+			h = (X[i] - X[i - 1]);
+			q = (xx - X[i - 1]) / h;
+
+
+			for (j = 1; j < 6; j++)
+			{
+				Y1[k] = Y[j] - Y[j - 1];
+				k++;
+			}
+			k = 0;
+			for (j = 1; j < 5; j++)
+			{
+				Y2[k] = Y1[j] - Y1[j - 1];
+				k++;
+			}
+			k = 0;
+			for (j = 1; j < 4; j++)
+			{
+				Y3[k] = Y2[j] - Y2[j - 1];
+				k++;
+			}
+			k = 0;
+			for (j = 1; j < 3; j++)
+			{
+				Y4[k] = Y3[j] - Y3[j - 1];
+				k++;
+			}
+			n = 0;
+			k = 0;
+			G = (Y1[n] + Y2[n] * (2 * q - 1) / 2 + Y3[n] * (3 * q * q - 6 * q + 2) / 6 + Y4[n] * (4 * q * q * q - 18 * q * q + 22 * q - 6) / 24) / h;
+			L = (Y2[n] + Y3[n] * (q - 1) + Y4[n] * (12 * q * q - 36 * q + 22) / 24) / (h * h);
+			Console.WriteLine("Y' = " + G + "\n");
+			Console.WriteLine("Y'' = " + L + "\n");
+			return 0;
+		}
+
+	}
+}
+
