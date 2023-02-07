@@ -1,0 +1,54 @@
+using System;
+
+namespace MO_6
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            double[] x = new double[100]; double[] y = new double[100];
+            Console.Write(" Vvedit promigok [start;end]:\n Start = ");
+            double start = double.Parse(Console.ReadLine());
+            Console.Write(" End = ");
+            double end = double.Parse(Console.ReadLine());
+            Console.Write(" Step = ");
+            double step = double.Parse(Console.ReadLine());
+            Console.Write(" Pochatkova umova: y("+start+") = ");
+            y[0] = double.Parse(Console.ReadLine());
+            x[0] = start;
+            double n = (end-start)/step;
+            Console.Write(" Select method:\n 1 - Eilera\n 2 - Koshi\n Method numer =  ");
+            int select = int.Parse(Console.ReadLine());
+            Console.Write(" --------------\n");
+            Console.WriteLine(" Table of values:");
+            if (select == 1)
+            {
+                MetodEilera(start, end, step, x, y,n);
+            }
+            if (select == 2)
+            {
+                MetodKoshi(start, end, step, x, y, n);
+            }
+        }
+        static void MetodEilera(double start, double end, double step, double[] x, double[] y, double n)
+        {
+            for (int i = 0; i<=n; i++)
+            {
+                x[i+1]=x[i]+step;
+                y[i+1]=y[i]+step*(x[i]+Math.Sin(y[i]/1.25));
+                Console.WriteLine(" "+x[i]+'\t'+Math.Round(y[i],4));
+            }
+        }
+        static void MetodKoshi(double start, double end, double step, double[] x, double[] y, double n)
+        {
+            for (int i = 0; i<=n; i++)
+            {
+                x[i+1]=x[i]+step;
+                y[i+1]=y[i]+step/2*(x[i]+Math.Cos(y[i]/Math.Sqrt(1.3))+x[i+1]+Math.Cos((y[i]+step*(x[i]+Math.Cos(y[i]/Math.Sqrt(1.3)))))/Math.Sqrt(1.3));
+                Console.WriteLine(" "+x[i]+'\t'+Math.Round(y[i], 4));
+            }
+        }
+    }
+}
+
+
